@@ -172,7 +172,7 @@ Complete the table for your chosen language.
 | Multiple testing correction | No FDR adjustment is applied to the 18000 raw p-values. | Apply a multiple comparisons correction to account for potential false positives. |
 | Post-hoc filtering threshold |Some of the genes were handpicked after seeing the results. | Specify a selection rule for differential gene expression and apply it programatically. |
 | Manual candidate selection | | |
-| Random seed / stochastic reproducibility | | |
+| Random seed / stochastic reproducibility | No seed was set. | Setting a seed for stochastic data processing makes it reproducible. |
 | Code documentation | | |
 | Unit testing | | |
 | Commit message quality | | |
