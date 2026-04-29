@@ -55,20 +55,20 @@ For each item below, mark whether a problem is present and write one sentence de
 
 | # | Category | Problem present? | Description |
 |---|---|---|---|
-| 1 | Sample size / statistical power | | |
-| 2 | Multiple testing correction | | |
-| 3 | P-hacking / HARKing | | |
-| 4 | Appropriate statistical test for count data | | |
-| 5 | Randomization and batch effects | | |
-| 6 | Biological vs. technical replicates | | |
-| 7 | Version pinning and dependency management | | |
-| 8 | Code portability / containerization | | |
-| 9 | FAIR — Findability and Accessibility of raw data | | |
-| 10 | FAIR — Interoperability and metadata completeness | | |
-| 11 | FAIR — Reusability, licensing, and provenance | | |
-| 12 | Single-institution / demographic sampling bias | | |
-| 13 | Confirmation bias from homogeneous team | | |
-| 14 | Domain blind spots from homogeneous team | | |
+| 1 | Sample size / statistical power | Yes | Cohort A and B are below the 20-25 group requirement for differential gene detection. |
+| 2 | Multiple testing correction | Yes | 18000 genes are tested with no correction.|
+| 3 | P-hacking / HARKing | Yes | The filter threshold was choosen after looking at the results.|
+| 4 | Appropriate statistical test for count data | Yes | A two-sample t-test is not appropriate for RNA-seq because RNA-seq counts are discreet and overdispersed.|
+| 5 | Randomization and batch effects |Yes | The year of sample prep is a confounding variable because Cohort B is all done in 2022. |
+| 6 | Biological vs. technical replicates |Yes | Patient 1 was sequenced three times but each library is counted as a biological replicate. |
+| 7 | Version pinning and dependency management |Yes | There is no version control, env.yml, or requirements.txt. |
+| 8 | Code portability / containerization | Yes | There is no contanerization through docker or singularity. |
+| 9 | FAIR — Findability and Accessibility of raw data | Yes | No access to the raw data or upload to GEO / other repositories for public to use. |
+| 10 | FAIR — Interoperability and metadata completeness | Yes | There is no metadata file to use so we do not know how it relates to the samples. |
+| 11 | FAIR — Reusability, licensing, and provenance | Yes | No license file in the repository. |
+| 12 | Single-institution / demographic sampling bias | Yes| All patients are male aged 55-70, no females included biases the results. |
+| 13 | Confirmation bias from homogeneous team | Yes | Both authors are from the same lab and specialty. |
+| 14 | Domain blind spots from homogeneous team | Yes | There are no domain experts in bioinformatics or statistics. |
 
 > **Hint:** Not every category has a single flaw — some have multiple layered problems. The goal is systematic thinking, not a perfect list.
 
