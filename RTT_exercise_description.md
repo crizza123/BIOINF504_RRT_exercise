@@ -163,14 +163,14 @@ Complete the table for your chosen language.
 
 | Issue Category | What's Wrong Here | How to Fix It |
 |---|---|---|
-| Environment / dependency management | | |
-| Containerization | | |
-| Hardcoded file paths | | |
-| File naming / version control | | |
-| Large files in git | | |
-| Statistical test choice for count data | | |
-| Multiple testing correction | | |
-| Post-hoc filtering threshold | | |
+| Environment / dependency management | There is no requirement.txt or environment.yml | Add the versions the packages being used and commit it to the repository. |
+| Containerization | No docker or singularity file | Add the containerization methods. |
+| Hardcoded file paths | os.chdir("/Users") | Resolve paths in a relative way or use a snakemake config. |
+| File naming / version control | counts_final.csv | Use a stable file name and then use git tags/branches for the versions. |
+| Large files in git | FastQ files are very large and should be .gitignore  | Move raw data to a SRA/GEO repo, ignore fastQ files in local repo so they arent pushed.|
+| Statistical test choice for count data | Stat t-test is ran on raw unormalized interger counts. | Use DESEQ2 for modeling instead because it accurately represents count data. |
+| Multiple testing correction | No FDR adjustment is applied to the 18000 raw p-values. | Apply a multiple comparisons correction to account for potential false positives. |
+| Post-hoc filtering threshold |Some of the genes were handpicked after seeing the results. | Specify a selection rule for differential gene expression and apply it programatically. |
 | Manual candidate selection | | |
 | Random seed / stochastic reproducibility | | |
 | Code documentation | | |
