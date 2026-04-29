@@ -264,8 +264,7 @@ dependencies:
 
 4. In one sentence: when is a pinned environment file alone *not* sufficient for full reproducibility, and what additional tool addresses this?
 
-
-
+You need to use containerization to reproduce the OS. These include things like Docker and singularity. 
 
 ---
 
@@ -277,12 +276,11 @@ Rate each dimension on a 1–5 scale (1 = completely absent, 5 = fully compliant
 
 | Dimension | Score (1–5) | Justification (cite specific evidence from the methods) |
 |---|---|---|
-| Findable | | |
-| Accessible | | |
-| Interoperable | | |
-| Reusable | | |
+| Findable | 1 | No DOI or GEO associated with the study. It only exists in the repository. |
+| Accessible | 2 | Repository is public but raw data is unavaible/ |
+| Interoperable | 1 | Sample IDs are bare, there is no seperate metadata file for the samples. |
+| Reusable | 1 | No license for reuse. There is no version control or containerization. |
 
-> Consider: Does "available upon reasonable request" satisfy Accessibility? Does the absence of a `LICENSE` file affect Reusability? Would depositing raw data in NCBI Gene Expression Omnibus (GEO) or Zenodo change the Findability score?
 
 #### Task 3B — Bias identification
 
