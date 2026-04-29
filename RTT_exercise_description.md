@@ -171,11 +171,11 @@ Complete the table for your chosen language.
 | Statistical test choice for count data | Stat t-test is ran on raw unormalized interger counts. | Use DESEQ2 for modeling instead because it accurately represents count data. |
 | Multiple testing correction | No FDR adjustment is applied to the 18000 raw p-values. | Apply a multiple comparisons correction to account for potential false positives. |
 | Post-hoc filtering threshold |Some of the genes were handpicked after seeing the results. | Specify a selection rule for differential gene expression and apply it programatically. |
-| Manual candidate selection | | |
+| Manual candidate selection | Some of the genes are handpicked in the analysis which is HARKing | Cutoff thresholds for differential expression should be preset prior to analysis. |
 | Random seed / stochastic reproducibility | No seed was set. | Setting a seed for stochastic data processing makes it reproducible. |
-| Code documentation | | |
-| Unit testing | | |
-| Commit message quality | | |
+| Code documentation | The script provided doesnt have docstrings, author, date, and explanation. | These all should be added for the sake of reproducibility.|
+| Unit testing | There are no unit tests for the code at all. | Add a directory for tests and add some tests.|
+| Commit message quality | There is no information in the commit message that talks to what has been done, only "final version". | Reference issues and create issues to be addressed so that there is information for what the commit is addressing. |
 
 #### Task 2B — Rewrite the stats section
 
@@ -183,22 +183,66 @@ Rewrite the testing section (the loop or `apply` block) using a statistically ap
 
 RNA-seq counts are discrete, non-negative integers that exhibit **overdispersion** — the variance exceeds the mean, which violates both the normality assumption of the t-test and the equidispersion assumption of a Poisson model. The **negative binomial distribution** explicitly models this overdispersion and is the standard choice for RNA-seq differential expression.
 
-Your rewrite must:
+**Rewritten testing block (Python, pydeseq2):**
 
-1. Use the correct package and key function calls with their main arguments — pseudocode is acceptable but must show the analysis pipeline steps, not just name the package
-   - Python: `pydeseq2` (`DeseqDataSet` → `deseq2()` → `DeseqStats` → `results_df`)
-   - R: `DESeq2` (`DESeqDataSetFromMatrix` → `DESeq` → `results`)
-2. Apply Benjamini–Hochberg FDR correction and name the function used
-3. Set a random seed (Python) or document why one is not needed (R)
-4. Include at least one comment per major step explaining *why*, not just *what*
+```python
+
+# (0) Imports packages for downstream data processing.
+
+import numpy as np
+import pandas as pd
+from pydeseq2.dds import DeseqDataSet
+from pydeseq2.ds import DeseqStats
+from pydeseq2.default_inference import DefaultInference
+
+# (1) Reproducibility: pydeseq2 fits dispersions with stochastic
+#     numerical optimization, so pin the seed to make re-runs identical.
+np.random.seed(21)
+
+# (2) Independent filter, decided BEFORE looking at p-values:
+#     keep genes with >=10 counts in at least min(group_size) samples.
+#     This is the standard DESeq2 "independence" criterion -- it does
+#     not depend on the test statistic, so it does not bias the FDR.
+min_group = metadata["condition"].value_counts().min()
+keep      = (counts >= 10).sum(axis=1) >= min_group
+counts_f  = counts.loc[keep]
+
+# (3) Build the DeseqDataSet. Counts must be (samples x genes) for
+#     pydeseq2, and the design includes 'batch' so the 2018-vs-2022
+#     library-prep run is controlled for, not aliased into 'condition'.
+#     'condition' is listed LAST so it is the variable being tested.
+dds = DeseqDataSet(
+    counts    = counts_f.T,
+    metadata  = metadata.set_index("sample_id"),
+    design    = "~ batch + condition",
+    inference = DefaultInference(n_cpus=4),
+)
+dds.deseq2()   # size factors, NB GLM fit, dispersion shrinkage
+
+# (4) Wald test for the tumor-vs-normal contrast. DeseqStats.summary()
+#     internally applies Benjamini-Hochberg FDR (method='fdr_bh'),
+#     producing the 'padj' column -- so the multiple-testing
+#     correction comes "for free" via the standard pipeline.
+stat_res = DeseqStats(dds, contrast=["condition", "tumor", "normal"])
+stat_res.summary()
+
+# (5) Hard, pre-registered cut-off. padj is BH-adjusted, NOT raw p.
+res = stat_res.results_df
+sig = res.loc[(res["padj"] < 0.05) & (res["log2FoldChange"].abs() > 1)]
+sig.to_csv("de_results_padj_lt_0p05_lfc_gt_1.csv")
+print(f"DE genes after BH-FDR: {len(sig)}")
+```
 
 #### Task 2C — Environment reproducibility
 
 Rather than simply writing an environment file, answer the following:
 
 1. Name two specific things that would **silently break** if a collaborator ran the original script two years from now without any pinned versions. Be concrete — name a package and a type of change that could occur.
-2. Write a minimal `environment.yml` (Python/Conda) or `renv` initialization (R) pinning at least 5 relevant packages to specific versions.
-3. In one sentence: when is a pinned environment file alone *not* sufficient for full reproducibility, and what additional tool addresses this?
+
+Panda
+   
+3. Write a minimal `environment.yml` (Python/Conda) or `renv` initialization (R) pinning at least 5 relevant packages to specific versions.
+4. In one sentence: when is a pinned environment file alone *not* sufficient for full reproducibility, and what additional tool addresses this?
 
 ---
 
