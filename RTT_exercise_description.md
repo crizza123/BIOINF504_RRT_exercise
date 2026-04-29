@@ -239,10 +239,33 @@ Rather than simply writing an environment file, answer the following:
 
 1. Name two specific things that would **silently break** if a collaborator ran the original script two years from now without any pinned versions. Be concrete — name a package and a type of change that could occur.
 
-Panda
+a. Pandas group-by function has changed between versions. When called after being updated it would break.
+b. scipy added a permutations argument to stats.ttest, if it is not specified and the function is called with a different version then it could throw an error at the user. 
    
 3. Write a minimal `environment.yml` (Python/Conda) or `renv` initialization (R) pinning at least 5 relevant packages to specific versions.
+
+**Minimal pinned `environment.yml`:**
+
+```yaml
+name: rnaseq-audit
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.11.9
+  - pandas=2.2.2
+  - numpy=1.26.4
+  - scipy=1.13.1
+  - statsmodels=0.14.2
+  - pip=24.0
+  - pip:
+      - pydeseq2==0.4.12
+```
+
 4. In one sentence: when is a pinned environment file alone *not* sufficient for full reproducibility, and what additional tool addresses this?
+
+
+
 
 ---
 
