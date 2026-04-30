@@ -450,10 +450,15 @@ print(math.ceil(float(n[0])))
 
 Write exactly **5 bullet points** describing an improved study design, one per course principle listed below. Each bullet must include: (a) one named tool or approach, (b) one sentence explaining which specific flaw it addresses and why, and (c) one limitation — something this fix does *not* solve.
 
-Principles to address (one each): **statistics · software engineering · FAIR · bias/confounding · team diversity**
+- **Statistics — `pydeseq2` with batch covariate + IHW.** Replace the t-test with DESEQ2 for covariate-aware FDR. This fixes unmodelled batch term  and missing multiple-testing correction in one step. *Limitation:* does not fix the underlying sample-size problem — power stays below 50% at n=6 per group.
 
-> Python tools to draw from: Snakemake, Zenodo, Docker, GEO, `pydeseq2`, `pytest`, DVC, OSF  
-> R tools to draw from: Nextflow, Zenodo, Apptainer, GEO, `DESeq2`, `testthat`, `renv`, `RnaSeqSampleSize`
+- **Software engineering — Snakemake + version-pinned `environment.yml`.** Refactor the script into a Snakemake workflow with per-rule conda envs (`conda: envs/de.yml`), addressing both the hardcoded `os.chdir` and the undoccumented versions. *Limitation:* reproduces the workflow but not the OS — glibc/BLAS drift still requires a Docker/Apptainer wrapper for binary reproducibility.
+
+- **FAIR — Zenodo + GEO submission.** Deposit raw FASTQs in GEO/SRA and the analysis bundle code and process counts with decriptions. *Limitation:* a DOI makes data findable but does not enforce standard metadata.
+
+- **Bias / confounding — randomized block design + ComBat-seq sanity check.** Balance tumor and normal samples within each library-prep run at collection; at QC, run `sva::ComBat_seq` and inspect PC1/PC2 colored by batch vs. condition to confirm the technical effect is no longer dominant. *Limitation:* addresses technical batch effects only and does not correct for the all-male, single-institution.
+
+- **Team diversity — biostatistician via methods-consultation milestone.** Mandate a 30-minute methods consult at the study-design phase with Bioinformatics expert. *Limitation:* a consultant flags methodological problems but does not eliminate confirmation bias due to limited team diversity.
 
 ---
 
@@ -461,22 +466,12 @@ Principles to address (one each): **statistics · software engineering · FAIR �
 
 #### Task 5A — Reflection
 
-In 3–5 sentences: *Which single flaw in this study do you think is most common in published bioinformatics literature, and why is it so persistent?* Draw on at least one concept from the course. There is no single correct answer — we are looking for critical reasoning and specificity.
+The most common flaw in published bioinformatics is the combination of underpowered studies, lack of proper documentation, and insufficient metadata. This occurs usually because budget constraints and time constraints. The publication system rewards fast publishing while using a minimum budget and unfortunately causes a lack of proper documentation. 
 
 #### Task 5B — Prioritization *(~7 min)*
 
 You have one week before your collaborator submits the grant. You cannot fix everything. **Choose the single most important flaw to address first.** In 3–5 sentences, defend your choice. Your answer must: (1) name the flaw, (2) explain what harm it causes if left unfixed, and (3) acknowledge the strongest counter-argument for fixing a different flaw instead.
 
-> **Optional extension:** Find one real published paper and identify one reproducibility or FAIR issue in its methods or data availability statement. Write two sentences. 
+Fix the wrong statistical test being used for differential expression detection. The findings and conclusions are completely wrong, if caught by a reviewer it will kill the study completely and if it does not kill the study our collaborator will be in a difficult situation in terms of reproducing and continuing the study he is working on. Redocumenting and making the data available is a strong second argument, including more robust description, package versions, and place where the raw and processed data can be viewed because none of the results and conclusions can be 
+verified from this perspective anyways because not all the information needed to draw an appropriate reproducible conclusion is there. 
 
----
-
-### Deliverables *(~10 min for exercise prep and deliverables check)*
-
-Submit all of the following as a pull request to this repository or single PDF or `.md` file via the course portal.
-
-1. Completed annotation checklist (Task 1A) with one sentence per item
-2. Completed code audit table (Task 2A), rewritten stats section (Task 2B), and environment reproducibility answers (Task 2C)
-3. FAIR scores with evidence-based justifications (Task 3A), bias analysis (Task 3B), and team composition answers (Task 3C parts 1 and 2)
-4. Power calculation with workthrough shown and genome-wide interpretation (Task 4A), plus 5-bullet redesign with tool, rationale, and limitation per bullet (Task 4B)
-5. Reflection (Task 5A) and prioritization argument (Task 5B)
