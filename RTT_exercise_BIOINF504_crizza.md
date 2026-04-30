@@ -454,7 +454,7 @@ Write exactly **5 bullet points** describing an improved study design, one per c
 
 - **Software engineering — Snakemake + version-pinned `environment.yml`.** Refactor the script into a Snakemake workflow with per-rule conda envs (`conda: envs/de.yml`), addressing both the hardcoded `os.chdir` and the undoccumented versions. *Limitation:* reproduces the workflow but not the OS — glibc/BLAS drift still requires a Docker/Apptainer wrapper for binary reproducibility.
 
-- **FAIR — Zenodo + GEO submission.** Deposit raw FASTQs in GEO/SRA and the analysis bundle code and process counts with decriptions. *Limitation:* a DOI makes data findable but does not enforce standard metadata.
+- **FAIR GEO submission.** Deposit raw FASTQs in GEO/SRA and the analysis bundle code and process counts with decriptions. *Limitation:* a DOI makes data findable but does not enforce standard metadata.
 
 - **Bias / confounding — randomized block design + ComBat-seq sanity check.** Balance tumor and normal samples within each library-prep run at collection; at QC, run `sva::ComBat_seq` and inspect PC1/PC2 colored by batch vs. condition to confirm the technical effect is no longer dominant. *Limitation:* addresses technical batch effects only and does not correct for the all-male, single-institution.
 
