@@ -450,7 +450,7 @@ print(math.ceil(float(n[0])))
 
 Write exactly **5 bullet points** describing an improved study design, one per course principle listed below. Each bullet must include: (a) one named tool or approach, (b) one sentence explaining which specific flaw it addresses and why, and (c) one limitation — something this fix does *not* solve.
 
-- **Statistics — `pydeseq2` with batch covariate + IHW.** Replace the t-test with DESEQ2 for covariate-aware FDR. This fixes unmodelled batch term  and missing multiple-testing correction in one step. *Limitation:* does not fix the underlying sample-size problem — power stays below 50% at n=6 per group.
+- **Statistics — `pydeseq2` with batch and other covariates.** Replace the t-test with DESEQ2 for covariate-aware FDR. This fixes unmodelled batch term  and missing multiple-testing correction in one step. *Limitation:* does not fix the underlying sample-size problem — power stays below 50% at n=6 per group.
 
 - **Software engineering — Snakemake + version-pinned `environment.yml`.** Refactor the script into a Snakemake workflow with per-rule conda envs (`conda: envs/de.yml`), addressing both the hardcoded `os.chdir` and the undoccumented versions. *Limitation:* reproduces the workflow but not the OS — glibc/BLAS drift still requires a Docker/Apptainer wrapper for binary reproducibility.
 
