@@ -284,10 +284,22 @@ Rate each dimension on a 1–5 scale (1 = completely absent, 5 = fully compliant
 
 #### Task 3B — Bias identification
 
-List at least **three distinct sources of bias or confounding** present in this study. For each one provide:
-1. The **type of bias** (e.g., selection bias, confirmation bias, technical confounding)
-2. The **specific claim in the methods excerpt** that is undermined — do not write generic answers like "it threatens validity"
-3. One concrete **mitigation strategy** with a named tool or approach
+### Task 3B — Bias Identification
+
+**Bias #1 — Technical confounding (batch ↔ condition aliasing).**
+*Type:* Technical confounding via library-prep batch.
+*Claim undermined:* "samples collected in 2018 were processed together, and samples collected in 2022 were processed together" creates a confounding effect between sampele prep and the cohort.
+*Mitigation:* Fit batch, cohort, and condition in DESeq2/pydeseq2 so the batch term absorbs the technical signal.
+
+**Bias #2 — Selection bias (single institution, single sex, narrow age).**
+*Type:* Selection bias / narrow demographic stratum.
+*Claim undermined:* "All patients were male, aged 55–70, recruited at a single institution" Differential expression is specific to this cohort and cannot be generalized.
+*Mitigation:* Replicate the discovery panel in a more diverse cohort. 
+
+**Bias #3 — HARKing / post-hoc selection on the dependent variable.**
+*Type:* HARKing.
+*Claim undermined:* "We selected the top 12 candidate genes based on fold-change ranking after seeing the data" Selection on the dependent variable inflates effect sizes and invalidates the reported p-values.
+*Mitigation:* Pre-designate filtering criteria for differential expression.
 
 #### Task 3C — Team composition
 
