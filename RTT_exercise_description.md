@@ -301,12 +301,11 @@ Rate each dimension on a 1–5 scale (1 = completely absent, 5 = fully compliant
 *Claim undermined:* "We selected the top 12 candidate genes based on fold-change ranking after seeing the data" Selection on the dependent variable inflates effect sizes and invalidates the reported p-values.
 *Mitigation:* Pre-designate filtering criteria for differential expression.
 
-#### Task 3C — Team composition
+### Task 3C — Team Composition
 
-The methods note that both authors are from the same lab and share the same clinical specialty (oncology). Answer both parts:
+**1) Confirmation bias safeguard.** Same-lab authorship means both authors share priors about which genes are biologically plausible, so false positives that fit those priors get rationalized into the candidate list. The lightest structural fix at the analysis stage is **pre-analysis blinding**: a third party scrambles the condition labels, the analyst writes and locks the entire pipeline against the scrambled labels, and only then are the true labels revealed for the final p-value run.
 
-1. **Confirmation bias:** How does same-lab authorship increase the risk of confirmation bias, and what is one structural safeguard that can be put in place at the analysis stage?
-2. **Domain blind spots:** What type of expertise is missing from this two-person oncology team that would have caught the core statistical flaw in this script, and how would you recruit that expertise at the study design phase?
+**2) Domain blind spots.** The expertise missing from a two-oncologist team is a **biostatistician or computational biologist** with high-throughput experience. The person who would have flagged the t-test on raw counts, the missing FDR correction, and the n=4 power deficit on a 30-minute review. Recruit them at the study-design and add them as a named co-investigator with explicit ownership of the statistical analysis plan before sample collection begins.
 
 ---
 
