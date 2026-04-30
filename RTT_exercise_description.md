@@ -438,9 +438,13 @@ print(math.ceil(float(n[0])))
 **Answer these questions:**
 
 1. What minimum n per group does `sample_size()` return with these parameters?
-2. How does the answer change if you assume only 1% of genes are truly DE (m1 = 180)? What does this tell you about how sensitive the power estimate is to your assumptions?
-3. The scenario uses n = 6 (Cohort A) and n = 4 (Cohort B). Beyond missing true DE genes, what is one additional scientific consequence of running an underpowered high-throughput study?
-
+   The n gives 11.08 so I would round up to 12 as a sample size.
+   
+3. How does the answer change if you assume only 1% of genes are truly DE (m1 = 180)? What does this tell you about how sensitive the power estimate is to your assumptions?
+    This increases the N that you need in your analysis. It shows you that it is very sensitive to your initial assumptions.
+   
+5. The scenario uses n = 6 (Cohort A) and n = 4 (Cohort B). Beyond missing true DE genes, what is one additional scientific consequence of running an underpowered high-throughput study?
+    The study has low positive predictive power so the is higher noise which causes an increase in false positives in the study.
 
 #### Task 4B — Redesign in 5 bullets
 
