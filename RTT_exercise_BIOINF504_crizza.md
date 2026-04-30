@@ -466,12 +466,12 @@ Write exactly **5 bullet points** describing an improved study design, one per c
 
 #### Task 5A — Reflection
 
-The most common flaw in published bioinformatics is the combination of underpowered studies, lack of proper documentation, and insufficient metadata. This occurs usually because budget constraints and time constraints. The publication system rewards fast publishing while using a minimum budget and unfortunately causes a lack of proper documentation. 
+1. The most common flaw in published bioinformatics is the combination of underpowered studies, lack of proper documentation, and insufficient metadata. This occurs usually because budget constraints and time constraints. The publication system rewards fast publishing while using a minimum budget and unfortunately causes a lack of proper documentation. 
 
 #### Task 5B — Prioritization *(~7 min)*
 
 You have one week before your collaborator submits the grant. You cannot fix everything. **Choose the single most important flaw to address first.** In 3–5 sentences, defend your choice. Your answer must: (1) name the flaw, (2) explain what harm it causes if left unfixed, and (3) acknowledge the strongest counter-argument for fixing a different flaw instead.
 
-Fix the wrong statistical test being used for differential expression detection. The findings and conclusions are completely wrong, if caught by a reviewer it will kill the study completely and if it does not kill the study our collaborator will be in a difficult situation in terms of reproducing and continuing the study he is working on. Redocumenting and making the data available is a strong second argument, including more robust description, package versions, and place where the raw and processed data can be viewed because none of the results and conclusions can be 
+2. Fix the wrong statistical test being used for differential expression detection. The findings and conclusions are completely wrong, if caught by a reviewer it will kill the study completely and if it does not kill the study our collaborator will be in a difficult situation in terms of reproducing and continuing the study he is working on. Redocumenting and making the data available is a strong second argument, including more robust description, package versions, and place where the raw and processed data can be viewed because none of the results and conclusions can be 
 verified from this perspective anyways because not all the information needed to draw an appropriate reproducible conclusion is there. 
 
